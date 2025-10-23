@@ -22,17 +22,17 @@ This is a simple CUDA program that adds two vectors together on the GPU.
 
 ## How to Use on a Cluster
 
-### 1. Copy all files to the cluster
+### 1. Log into the cluster
 
 ```bash
-scp vector_add.cu Makefile submit.slurm your_username@cluster.edu:~/cuda_tutorial/
+ssh your_username@sherlock.stanford.edu
 ```
 
-### 2. Log into the cluster
+### 2. Clone the repository
 
 ```bash
-ssh your_username@cluster.edu
-cd ~/cuda_tutorial
+git clone https://github.com/ispecht/cuda-tutorial.git
+cd cuda-tutorial
 ```
 
 ### 3. Adjust the SLURM script for your cluster
@@ -42,6 +42,7 @@ Edit `submit.slurm` and modify:
 - `module load cuda/11.8` - Change to your cluster's CUDA module version
 
 To find available modules: `module avail cuda`
+To find available partitions: `sinfo`
 
 ### 4. Submit the job
 
@@ -92,11 +93,3 @@ SUCCESS! All results are correct.
 
 **Problem**: Job stays in queue
 - **Solution**: Check if GPU partition is correct: `sinfo -p gpu`
-
-## Teaching Tips
-
-1. Start by explaining the overall flow: CPU → GPU → CPU
-2. Draw the thread/block grid on a whiteboard
-3. Walk through the index calculation: `idx = blockIdx.x * blockDim.x + threadIdx.x`
-4. Emphasize the memory copy steps (students often forget these)
-5. Show how changing `threadsPerBlock` affects performance
