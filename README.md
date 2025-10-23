@@ -2,6 +2,8 @@
 
 This is a simple CUDA program that adds two vectors together on the GPU.
 
+*This tutorial was generated using Claude (Anthropic) and configured for the Sherlock cluster at Stanford.*
+
 ## Files Included
 
 - **vector_add.cu** - The main CUDA program with detailed comments
@@ -20,9 +22,9 @@ This is a simple CUDA program that adds two vectors together on the GPU.
 4. **Kernel Launch**: Using `<<<blocks, threads>>>` syntax
 5. **Synchronization**: Waiting for GPU to finish with `cudaDeviceSynchronize()`
 
-## How to Use on a Cluster
+## How to Use on Sherlock
 
-### 1. Log into the cluster
+### 1. Log into Sherlock
 
 ```bash
 ssh your_username@sherlock.stanford.edu
@@ -35,28 +37,19 @@ git clone https://github.com/ispecht/cuda-tutorial.git
 cd cuda-tutorial
 ```
 
-### 3. Adjust the SLURM script for your cluster
-
-Edit `submit.slurm` and modify:
-- `#SBATCH --partition=gpu` - Change to your cluster's GPU partition name
-- `module load cuda/11.8` - Change to your cluster's CUDA module version
-
-To find available modules: `module avail cuda`
-To find available partitions: `sinfo`
-
-### 4. Submit the job
+### 3. Submit the job
 
 ```bash
 sbatch submit.slurm
 ```
 
-### 5. Check job status
+### 4. Check job status
 
 ```bash
 squeue -u $USER
 ```
 
-### 6. View results
+### 5. View results
 
 Once the job completes, check the output file:
 
@@ -86,10 +79,10 @@ SUCCESS! All results are correct.
 ## Common Issues and Solutions
 
 **Problem**: Compilation fails with architecture error
-- **Solution**: Change `-arch=sm_70` in Makefile to match your GPU (use `nvidia-smi` to check)
-
-**Problem**: `module load cuda` fails
-- **Solution**: Check available CUDA versions with `module avail cuda`
+- **Solution**: The Makefile is configured for `-arch=sm_70` which works for most Sherlock GPUs. If you encounter issues, check your GPU with `nvidia-smi` on a GPU node and adjust accordingly.
 
 **Problem**: Job stays in queue
-- **Solution**: Check if GPU partition is correct: `sinfo -p gpu`
+- **Solution**: Check queue status with `squeue` - Sherlock's GPU partition may be busy during peak hours.
+
+**Problem**: Can't find output file
+- **Solution**: Look for files matching the pattern `vector_add_*.out` in your directory
