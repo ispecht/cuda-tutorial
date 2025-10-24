@@ -17,6 +17,7 @@ echo "Job ID: $SLURM_JOB_ID"
 
 # Load CUDA module (adjust version for your cluster)
 # Check available modules with: module avail cuda
+module load gcc/10.1.0
 module load cuda/12.1.1
 
 # Print GPU information
